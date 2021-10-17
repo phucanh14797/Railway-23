@@ -4,17 +4,17 @@ USE testing_system_assignment_1;
 
 -- Department
 CREATE TABLE Department ( 
-	DepartmentID  		INT UNSIGNED PRIMARY KEY,
+	DepartmentID  		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     DepartmentName    	VARCHAR(30) UNIQUE KEY
 ); 
 -- Poisition
 CREATE TABLE `Position` (
-	PositionID		TINYINT UNSIGNED PRIMARY KEY,
+	PositionID		TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     PositionName	ENUM('Dev', 'Test', 'Scrum Master', 'PM')
 );
 -- Account
 CREATE TABLE `Account` (
-	AccountID		INT UNSIGNED PRIMARY KEY,
+	AccountID		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Email			VARCHAR(100) UNIQUE KEY,
     Username		VARCHAR(100) UNIQUE KEY,
     FullName		VARCHAR(100),
@@ -26,7 +26,7 @@ CREATE TABLE `Account` (
 );
 -- Group
 CREATE TABLE `Group` (
-	GroupID 		INT UNSIGNED PRIMARY KEY,
+	GroupID 		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     GroupName		VARCHAR(100),
     CreatorID		INT UNSIGNED,
     CreateDate		DATE,
@@ -42,17 +42,17 @@ CREATE TABLE GroupAccount (
 );
 -- Type Question
 CREATE TABLE TypeQuestion (
-	TypeID			INT UNSIGNED PRIMARY KEY,
+	TypeID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	TypeName		ENUM('Essay','Multiple-Choise')
 );
 -- CategoryQuestion
 CREATE TABLE CategoryQuestion (
-	CategoryID			INT UNSIGNED PRIMARY KEY,
+	CategoryID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	CategoryName		VARCHAR(30)
 );
 -- Question
 CREATE TABLE Question (
-	QuestionID			INT UNSIGNED PRIMARY KEY,
+	QuestionID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	Content				VARCHAR(100),
     CategoryID			INT UNSIGNED,
     TypeID				INT UNSIGNED,
@@ -62,7 +62,7 @@ CREATE TABLE Question (
 );
 -- Answer
 CREATE TABLE Answer (
-	AnswerID			INT UNSIGNED PRIMARY KEY,
+	AnswerID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	Content				VARCHAR(100),
     QuestionID			INT UNSIGNED,
     isCorrect			ENUM('Correct','NOT Correct'),
@@ -70,7 +70,7 @@ CREATE TABLE Answer (
 );
 -- Exam
 CREATE TABLE Exam (
-	ExamID				INT UNSIGNED PRIMARY KEY,
+	ExamID				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	`Code`				INT UNSIGNED,
 	Title				VARCHAR(100),
     CategoryID			INT UNSIGNED,
