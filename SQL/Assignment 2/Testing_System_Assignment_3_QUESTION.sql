@@ -16,10 +16,10 @@ WHERE LENGTH(fullname) = (
 	SELECT MAX(LENGTH(fullname))
     FROM `account`);
 
--- QUESTION 5: LẤY RA THÔNG TIN ACCOUNT CÓ FULLNAME DÀI NHẤT & ID=3
-SELECT *
+-- QUESTION 5: LẤY RA THÔNG TIN ACCOUNT CÓ FULLNAME DÀI NHẤT & department_id=3
+SELECT `account`.*
 FROM `account` 
 WHERE LENGTH(fullname) = (
 	SELECT MAX(LENGTH(fullname))
     FROM `account`) 
-AND account_id = 3;
+AND department_id = 3;
