@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS Fresher_Training_Management;
 CREATE DATABASE Fresher_Training_Management;
 USE Fresher_Training_Management;
 CREATE TABLE Fresh_trainee (
-	TraineeID 			MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	Trainee_ID 			MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     VTI_Account			MEDIUMINT NOT NULL UNIQUE KEY,
     FullName 			VARCHAR(100),
     BirthDate			DATE,
@@ -19,7 +19,7 @@ CREATE TABLE Fresh_trainee (
 DROP DATABASE IF EXISTS Assignment1_Ex2;
 CREATE DATABASE Assignment1_Ex2;
 USE Assignment1_Ex2;
-CREATE TABLE Datatype (
+CREATE TABLE Data_type (
 	ID				MEDIUMINT AUTO_INCREMENT PRIMARY KEY,
     `Name`			VARCHAR(100),
     `Code`			CHAR(5),
@@ -30,7 +30,7 @@ CREATE TABLE Datatype (
 DROP DATABASE IF EXISTS Assignment1_Ex3;
 CREATE DATABASE Assignment1_Ex3;
 USE Assignment1_Ex3;
-CREATE TABLE Datatype (
+CREATE TABLE Data_type (
 	ID				MEDIUMINT AUTO_INCREMENT PRIMARY KEY,
     `Name`			VARCHAR(100),
     BirthDate		DATE,

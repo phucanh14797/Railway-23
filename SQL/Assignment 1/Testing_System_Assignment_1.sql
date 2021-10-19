@@ -1,89 +1,77 @@
-DROP DATABASE IF EXISTS testing_system_assignment_1;
-CREATE DATABASE testing_system_assignment_1;
-USE testing_system_assignment_1;
+CREATE DATABASE Testing_System_Assignment_1;
+USE Testing_System_Assignment_1;
 
 -- Department
-CREATE TABLE Department ( 
-	DepartmentID  		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    DepartmentName    	VARCHAR(30) UNIQUE KEY
+CREATE TABLE Department( 
+	Department_ID  	INT,
+    Department_Name VARCHAR(100)
 ); 
 -- Poisition
-CREATE TABLE `Position` (
-	PositionID		TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    PositionName	ENUM('Dev', 'Test', 'Scrum Master', 'PM')
+CREATE TABLE `Position`(
+	Position_ID		INT,
+    Position_Name	ENUM('Dev', 'Test', 'Scrum Master', 'PM')
 );
 -- Account
-CREATE TABLE `Account` (
-	AccountID		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    Email			VARCHAR(100) UNIQUE KEY,
-    Username		VARCHAR(100) UNIQUE KEY,
+CREATE TABLE `Account`(
+	Account_ID		INT,
+    Email			VARCHAR(100),
+    Username		VARCHAR(100),
     FullName		VARCHAR(100),
-    DepartmentID	INT UNSIGNED,
-    PositionID		TINYINT UNSIGNED,
-    CreateDate		DATE,
-    FOREIGN KEY(DepartmentID) REFERENCES Department(DepartmentID),
-    FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID)
+    Department_ID	INT,
+    Position_ID		INT,
+    Create_Date		DATE
 );
 -- Group
-CREATE TABLE `Group` (
-	GroupID 		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    GroupName		VARCHAR(100),
-    CreatorID		INT UNSIGNED,
-    CreateDate		DATE,
-    FOREIGN KEY(CreatorID) REFERENCES `Account`(AccountID)
+CREATE TABLE `Group`(
+	Group_ID 	INT,
+    Group_Name	VARCHAR(100),
+    Creator_ID	INT,
+    Create_Date	DATE
 );
 -- GroupAccount
-CREATE TABLE GroupAccount (
-	GroupID			INT UNSIGNED,
-	AccountID		INT UNSIGNED,	
-	JoinDate 		DATE,
-    FOREIGN KEY(GroupID) REFERENCES `Group`(GroupID),
-    FOREIGN KEY(AccountID) REFERENCES `Account`(AccountID)
+CREATE TABLE Group_Account(
+	Group_ID	INT,
+	Account_ID	INT,	
+	Join_Date 	DATE
 );
 -- Type Question
-CREATE TABLE TypeQuestion (
-	TypeID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	TypeName		ENUM('Essay','Multiple-Choise')
+CREATE TABLE Type_Question(
+	Type_ID		INT,
+	Type_Name	ENUM('Essay','Multiple-Choise')
 );
 -- CategoryQuestion
-CREATE TABLE CategoryQuestion (
-	CategoryID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	CategoryName		VARCHAR(30)
+CREATE TABLE Category_Question(
+	Category_ID		INT,
+	Category_Name	VARCHAR(100)
 );
 -- Question
-CREATE TABLE Question (
-	QuestionID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	Content				VARCHAR(100),
-    CategoryID			INT UNSIGNED,
-    TypeID				INT UNSIGNED,
-	CreatorID			INT UNSIGNED,
-    CreateDate			DATE,
-    FOREIGN KEY(CreatorID) REFERENCES `Account`(AccountID)
+CREATE TABLE Question(
+	Question_ID		INT,
+	Content			VARCHAR(1000),
+    Category_ID		INT,
+    Type_ID			INT,
+	Creator_ID		INT,
+    Create_Date		DATE
 );
 -- Answer
-CREATE TABLE Answer (
-	AnswerID			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	Content				VARCHAR(100),
-    QuestionID			INT UNSIGNED,
-    isCorrect			ENUM('Correct','NOT Correct'),
-    FOREIGN KEY(QuestionID) REFERENCES Question(QuestionID)
+CREATE TABLE Answer(
+	Answer_ID		INT,
+	Content			VARCHAR(1000),
+    Question_ID		INT,
+    is_Correct		BOOLEAN
 );
 -- Exam
-CREATE TABLE Exam (
-	ExamID				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`Code`				INT UNSIGNED,
-	Title				VARCHAR(100),
-    CategoryID			INT UNSIGNED,
-    Duration			TIME,
-    CreatorID			INT UNSIGNED,
-    CreateDate			DATE,
-    FOREIGN KEY(CreatorID) REFERENCES `Account`(AccountID),
-    FOREIGN KEY(CategoryID) REFERENCES CategoryQuestion(CategoryID)
+CREATE TABLE Exam(
+	Exam_ID			INT,
+	`Code`			INT,
+	Title			VARCHAR(255),
+    Category_ID		INT,
+    Duration		INT,
+    Creator_ID		INT,
+    Create_Date		DATE
 );
 -- ExamQuestion
-CREATE TABLE ExamQuestion (
-	ExamID				INT UNSIGNED,
-	QuestionID			INT UNSIGNED,
-    FOREIGN KEY(ExamID) REFERENCES Exam(ExamID),
-    FOREIGN KEY(QuestionID) REFERENCES Question(QuestionID)
+CREATE TABLE Exam_Question(
+	Exam_ID			INT,
+	Question_ID		INT
 );
