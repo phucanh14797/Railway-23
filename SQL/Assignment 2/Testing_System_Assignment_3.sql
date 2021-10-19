@@ -2,12 +2,12 @@ DROP DATABASE IF EXISTS Testing_System_Assignment_3;
 CREATE DATABASE Testing_System_Assignment_3;
 USE Testing_System_Assignment_3;
 
-ALTER DATABASE Testing_System_Assignment_3 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER DATABASE Testing_System_Assignment_3 CHARACTER SET UTF8MB4 COLLATE UTF8MB4_unicode_ci;
 
 -- Department
 CREATE TABLE department( 
 	department_id  	TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    department_name VARCHAR(50) CHAR SET utf8mb4 NOT NULL
+    department_name VARCHAR(40) CHAR SET UTF8MB4 NOT NULL UNIQUE KEY
 );
 -- Add data Department
 INSERT INTO department(department_name)
@@ -30,7 +30,7 @@ VALUES		('Marketing'),
 -- Poisition
 CREATE TABLE `position`(
 	position_id		TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    position_name	ENUM('Dev', 'Test', 'Scrum Master', 'PM', 'Giám đốc','Thư ký','Phó giám đốc','Trưởng phòng Marketing','Trưởng phòng Sale','Trưởng phòng Dịch vụ','Trưởng phòng Giám sát','Trưởng phòng Tài vụ','Trưởng phòng Kế hoạch','Trưởng phòng Tài chính','Trưởng phòng Pháp chế') CHAR SET utf8mb4
+    position_name	ENUM('Dev', 'Test', 'Scrum Master', 'PM', 'Giám đốc','Thư ký','Phó giám đốc','Trưởng phòng Marketing','Trưởng phòng Sale','Trưởng phòng Dịch vụ','Trưởng phòng Giám sát','Trưởng phòng Tài vụ','Trưởng phòng Kế hoạch','Trưởng phòng Tài chính','Trưởng phòng Pháp chế') CHAR SET UTF8MB4
 );
 -- Add data Position
 INSERT INTO `position`(position_name)
@@ -54,9 +54,9 @@ VALUES		('Dev' ),
 -- Account
 CREATE TABLE `account`(
 	account_id		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    email			VARCHAR(100) UNIQUE NOT NULL,
-    username		VARCHAR(100) UNIQUE NOT NULL,
-    fullname		VARCHAR(100) CHAR SET utf8mb4 NOT NULL,
+    email			VARCHAR(80) UNIQUE NOT NULL,
+    username		VARCHAR(30) UNIQUE NOT NULL,
+    fullname		VARCHAR(50) CHAR SET UTF8MB4 NOT NULL,
     department_id	TINYINT UNSIGNED NOT NULL,
     position_id		TINYINT UNSIGNED NOT NULL,
     create_date		DATE,
@@ -83,7 +83,7 @@ VALUES      ('a@gmail.com', 'a1', 'NGUYỄN VĂN A', 5, 1, "2021-10-17"),
 -- Group
 CREATE TABLE `group`(
 	group_id 	INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    group_name	VARCHAR(100) CHAR SET utf8mb4,
+    group_name	VARCHAR(100) CHAR SET UTF8MB4 NOT NULL UNIQUE KEY,
     creator_id	INT UNSIGNED,
     create_date	DATE,
     FOREIGN KEY(creator_id) REFERENCES `account`(account_id)
@@ -108,9 +108,10 @@ VALUES		('SQL',1,"2021-10-17"),
             
 -- GroupAccount
 CREATE TABLE group_account(
-	group_id	INT UNSIGNED,
-	account_id	INT UNSIGNED,	
+	group_id	INT UNSIGNED NOT NULL,
+	account_id	INT UNSIGNED NOT NULL,	
 	join_date 	DATE,
+    PRIMARY KEY(group_id, account_id),
     FOREIGN KEY(group_id) REFERENCES `group`(group_id),
     FOREIGN KEY(account_id) REFERENCES `account`(account_id)
 );
@@ -122,15 +123,15 @@ VALUES		(1,1,"2021-10-17"),
             (4,4,"2021-10-17"),
             (5,2,"2021-10-17"),
             (6,5,"2021-10-17"),
-            (7,NULL,"2021-10-17"),
-			(8,NULL,"2021-10-17"),
-            (9,NULL,"2021-10-17"),
-            (10,NULL,"2021-10-17"),
-            (11,NULL,"2021-10-17"),
-            (12,NULL,"2021-10-17"),
-            (13,NULL,"2021-10-17"),
-            (14,NULL,"2021-10-17"),
-            (15,NULL,"2021-10-17");
+            (7,1,"2021-10-17"),
+			(8,2,"2021-10-17"),
+            (9,3,"2021-10-17"),
+            (10,4,"2021-10-17"),
+            (11,5,"2021-10-17"),
+            (12,6,"2021-10-17"),
+            (13,7,"2021-10-17"),
+            (14,8,"2021-10-17"),
+            (15,9,"2021-10-17");
             
 -- Type Question
 CREATE TABLE type_question(
@@ -145,7 +146,7 @@ VALUES		('Multiple-Choise'),
 -- Category_Question
 CREATE TABLE category_question(
 	category_id		TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	category_name	VARCHAR(30) CHAR SET utf8mb4
+	category_name	VARCHAR(30) CHAR SET UTF8MB4
 );
 -- Add data Category_Question
 INSERT INTO category_question(category_name)
@@ -168,64 +169,66 @@ VALUES		('TOÁN SỐ HỌC CƠ BẢN'),
 -- Question
 CREATE TABLE question(
 	question_id		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	content			VARCHAR(1000) CHAR SET utf8mb4,
-    category_id		INT UNSIGNED,
-    type_id			INT UNSIGNED,
+	content			VARCHAR(1000) CHAR SET UTF8MB4 NOT NULL,
+    category_id		TINYINT UNSIGNED,
+    type_id			TINYINT UNSIGNED,
 	creator_id		INT UNSIGNED,
     create_date		DATE,
-    FOREIGN KEY(creator_id) REFERENCES `account`(account_id)
+    FOREIGN KEY(creator_id) REFERENCES `account`(account_id),
+    FOREIGN KEY(type_id) REFERENCES type_question(type_id),
+    FOREIGN KEY(category_id) REFERENCES category_question(category_id)
 );
 -- Add data Category_Question
 INSERT INTO question(content, category_id, type_id, creator_id, create_date)
-VALUES		('1 + 1 = ?',1,1,1,"2021-10-17"),
-			('Hình tam giác có mấy cạnh ?',2,1,1,"2021-10-17"),
-            ('Nước sôi ở bao nhiêu độ ?',3,1,1,"2021-10-17"),
-            ('Ký hiệu hóa học của sắt là gì ?',4,1,1,"2021-10-17"),
-            ('Bộ phận nào được ví như bộ não của máy tính ?',5,1,1,"2021-10-17"),
-            ('11 x 11 = ?',6,1,1,"2021-10-17"),
-            ('Công thức tính diện tích hình tam giác là gì ?',7,1,1,"2021-10-17"),
-            ('Khi ánh sáng đi vào môi trường khác và bị lệch hướng gọi là hiện tượng gì ?',8,1,1,"2021-10-17"),
-            ('Thành phần cấu tạo của hầu hết của các loại nguyên tử gồm những gì ?',9,1,1,"2021-10-17"),
-            ('Bộ nhớ RAM và ROM là bộ nhớ gì ?',10,1,1,"2021-10-17"),
-            ('111 x 111 = ?',11,1,1,"2021-10-17"),
-            ('Đâu là định lý Pitago trong tam giác vuông ?',12,1,1,"2021-10-17"),
-            ('Ảnh của một vật khi soi qua gương được gọi là gì ?',13,1,1,"2021-10-17"),
-            ('Công thức hóa học của Axit Sulfuric ?',14,1,1,"2021-10-17"),
-            ('1Mb = ? Kb',15,1,1,"2021-10-17");
+VALUES	('1 + 1 = ?',																	1,1,1,"2021-10-17"),
+		('Hình tam giác có mấy cạnh ?',													2,1,1,"2021-10-17"),
+		('Nước sôi ở bao nhiêu độ ?',													3,1,1,"2021-10-17"),
+		('Ký hiệu hóa học của sắt là gì ?',												4,1,1,"2021-10-17"),
+		('Bộ phận nào được ví như bộ não của máy tính ?',								5,1,1,"2021-10-17"),
+		('11 x 11 = ?',																	6,1,1,"2021-10-17"),
+		('Công thức tính diện tích hình tam giác là gì ?',								7,1,1,"2021-10-17"),
+		('Khi ánh sáng đi vào môi trường khác và bị lệch hướng gọi là hiện tượng gì ?',	8,1,1,"2021-10-17"),
+		('Thành phần cấu tạo của hầu hết của các loại nguyên tử gồm những gì ?',		9,1,1,"2021-10-17"),
+		('Bộ nhớ RAM và ROM là bộ nhớ gì ?',											10,1,1,"2021-10-17"),
+		('111 x 111 = ?',																11,1,1,"2021-10-17"),
+		('Đâu là định lý Pitago trong tam giác vuông ?',								12,1,1,"2021-10-17"),
+		('Ảnh của một vật khi soi qua gương được gọi là gì ?',							13,1,1,"2021-10-17"),
+		('Công thức hóa học của Axit Sulfuric ?',										14,1,1,"2021-10-17"),
+		('1Mb = ? Kb',																	15,1,1,"2021-10-17");
 
 -- Answer
 CREATE TABLE answer(
 	answer_id		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	content			VARCHAR(1000),
-    question_ID		INT UNSIGNED,
-    is_correct		BOOLEAN,
+	content			VARCHAR(1000) CHAR SET UTF8MB4 NOT NULL,
+    question_id		INT UNSIGNED NOT NULL,
+    is_correct		BOOLEAN, -- 1 là đúng 0 là sai
     FOREIGN KEY(question_id) REFERENCES question(question_id)
 );
--- Add Answer
+-- Add Answer                           
 INSERT INTO answer(content, question_id, is_correct)
-VALUES		('2',1,1),
-			('3',2,1),
-            ('100 độ C',3,1),
-            ('Fe',4,1),
-            ('CPU',5,1),
-			('121',6,1),
-            ('S = (a x h)/2',7,1),
-            ('Khúc xạ',8,1),
-            ('Proton, notron, electron',9,1),
-            ('Primary memory',10,1),
-            ('12321',11,1),
-            ('Bình phương cạnh huyền bằng tổng bình phương của hai cạnh còn lại',12,1),
-            ('Ảnh ảo',13,1),
-            ('H2SO4',14,1),
-            ('1024 Kb',15,1);
+VALUES	('2',																1,1),
+		('3',																2,1),
+		('100 độ C',														3,1),
+		('Fe',																4,1),
+		('CPU',																5,1),
+		('121',																6,1),
+		('S = (a x h)/2',													7,1),
+		('Khúc xạ',															8,1),
+		('Proton, notron, electron',										9,1),
+		('Primary memory',													10,1),
+		('12321',															11,1),
+		('Bình phương cạnh huyền bằng tổng bình phương của hai cạnh còn lại',12,1),
+		('Ảnh ảo',															13,1),
+		('H2SO4',															14,1),
+		('1024 Kb',															15,1);
             
 -- Exam
 CREATE TABLE exam(
 	exam_id			SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	`code`			SMALLINT NOT NULL UNIQUE,
-	title			VARCHAR(100) CHAR SET utf8mb4,
+	title			VARCHAR(100) CHAR SET UTF8MB4 NOT NULL,
     category_id		TINYINT UNSIGNED,
-    duration		INT,
+    duration		ENUM('15','30','45','60','75','90','120'),
     creator_id		INT UNSIGNED,
     create_date		DATE,
     FOREIGN KEY(creator_id) REFERENCES `account`(account_id),
@@ -233,25 +236,27 @@ CREATE TABLE exam(
 );
 -- Add Exam
 INSERT INTO exam(`code`, title, category_id, duration, creator_id, create_date)
-VALUES  	(1111, 'TEST TRÌNH ĐỘ TOÁN SỐ HỌC', 1, 60, 1, "2021-10-17"),
-			(1112, 'TEST TRÌNH ĐỘ TOÁN HÌNH HỌC', 2, 60, 1, "2021-10-17"),
-            (1113, 'TEST TRÌNH ĐỘ VẬT LÝ', 3, 60, 1, "2021-10-17"),
-            (1114, 'TEST TRÌNH ĐỘ HÓA HỌC', 4, 60, 1, "2021-10-17"),
-            (1115, 'TEST TRÌNH ĐỘ TIN HỌC', 5, 60, 1, "2021-10-17"),
-			(1116, 'TEST TOÁN SỐ HỌC NÂNG CAO', 6, 60, 1, "2021-10-17"),
-            (1117, 'TEST TOÁN HÌNH HỌC NÂNG CAO', 7, 60, 1, "2021-10-17"),
-            (1118, 'TEST VẬT LÝ NÂNG CAO', 8, 60, 1, "2021-10-17"),
-            (1119, 'TEST HÓA HỌC NÂNG CAO', 9, 60, 1, "2021-10-17"),
-            (1120, 'TEST TIN HỌC NÂNG CAO ', 10, 60, 1, "2021-10-17"),
-            (1121, 'TEST TOÁN SỐ HỌC NÂNG CAO 2', 11, 60, 1, "2021-10-17"),
-            (1122, 'TEST TOÁN HÌNH HỌC NÂNG CAO 2', 12, 60, 1, "2021-10-17"),
-            (1123, 'TEST VẬT LÝ NÂNG CAO 2', 13, 60, 1, "2021-10-17"),
-            (1124, 'TEST HÓA HỌC NÂNG CAO 2', 14, 60, 1, "2021-10-17"),
-            (1125, 'TEST TIN HỌC NÂNG CAO 2', 15, 60, 1, "2021-10-17");
+VALUES  	(1111, 'TEST TRÌNH ĐỘ TOÁN SỐ HỌC', 1, '15', 1, "2021-10-17"),
+			(1112, 'TEST TRÌNH ĐỘ TOÁN HÌNH HỌC', 2, '15', 1, "2021-10-17"),
+            (1113, 'TEST TRÌNH ĐỘ VẬT LÝ', 3, '15', 1, "2021-10-17"),
+            (1114, 'TEST TRÌNH ĐỘ HÓA HỌC', 4, '15', 1, "2021-10-17"),
+            (1115, 'TEST TRÌNH ĐỘ TIN HỌC', 5, '15', 1, "2021-10-17"),
+			(1116, 'TEST TOÁN SỐ HỌC NÂNG CAO', 6, '15', 1, "2021-10-17"),
+            (1117, 'TEST TOÁN HÌNH HỌC NÂNG CAO', 7, '15', 1, "2021-10-17"),
+            (1118, 'TEST VẬT LÝ NÂNG CAO', 8, '15', 1, "2021-10-17"),
+            (1119, 'TEST HÓA HỌC NÂNG CAO', 9, '15', 1, "2021-10-17"),
+            (1120, 'TEST TIN HỌC NÂNG CAO ', 10, '15', 1, "2021-10-17"),
+            (1121, 'TEST TOÁN SỐ HỌC NÂNG CAO 2', 11, '15', 1, "2021-10-17"),
+            (1122, 'TEST TOÁN HÌNH HỌC NÂNG CAO 2', 12, '15', 1, "2021-10-17"),
+            (1123, 'TEST VẬT LÝ NÂNG CAO 2', 13, '15', 1, "2021-10-17"),
+            (1124, 'TEST HÓA HỌC NÂNG CAO 2', 14, '15', 1, "2021-10-17"),
+            (1125, 'TEST TIN HỌC NÂNG CAO 2', 15, '15', 1, "2021-10-17");
+            
 -- ExamQuestion
 CREATE TABLE exam_question(
 	exam_id			SMALLINT UNSIGNED,
 	question_id		INT UNSIGNED,
+    PRIMARY KEY(exam_id, question_id),
     FOREIGN KEY(exam_id) REFERENCES exam(exam_id),
     FOREIGN KEY(question_id) REFERENCES question(question_id)
 );
