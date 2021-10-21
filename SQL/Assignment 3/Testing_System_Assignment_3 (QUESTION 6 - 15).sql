@@ -47,7 +47,7 @@ WHERE fullname LIKE 'D%o';
 SELECT * FROM exam;
 
 DELETE 
-FROM `account` 
+FROM exam
 WHERE create_date < "2019-12-20";
 
 -- Question 13: Xóa tất cả các question có nội dung bắt đầu bằng từ "câu hỏi"
