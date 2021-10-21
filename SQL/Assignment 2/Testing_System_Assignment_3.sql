@@ -228,7 +228,7 @@ CREATE TABLE exam(
 	`code`			SMALLINT NOT NULL UNIQUE,
 	title			VARCHAR(100) CHAR SET UTF8MB4 NOT NULL,
     category_id		TINYINT UNSIGNED,
-    duration		ENUM('15','30','45','60','75','90','120'),
+    duration		TIME,
     creator_id		INT UNSIGNED,
     create_date		DATE,
     FOREIGN KEY(creator_id) REFERENCES `account`(account_id),
@@ -236,21 +236,21 @@ CREATE TABLE exam(
 );
 -- Add Exam
 INSERT INTO exam(`code`, title, category_id, duration, creator_id, create_date)
-VALUES  	(1111, 'TEST TRÌNH ĐỘ TOÁN SỐ HỌC', 1, '15', 1, "2021-10-17"),
-			(1112, 'TEST TRÌNH ĐỘ TOÁN HÌNH HỌC', 2, '15', 1, "2021-10-17"),
-            (1113, 'TEST TRÌNH ĐỘ VẬT LÝ', 3, '15', 1, "2021-10-17"),
-            (1114, 'TEST TRÌNH ĐỘ HÓA HỌC', 4, '15', 1, "2021-10-17"),
-            (1115, 'TEST TRÌNH ĐỘ TIN HỌC', 5, '15', 1, "2021-10-17"),
-			(1116, 'TEST TOÁN SỐ HỌC NÂNG CAO', 6, '15', 1, "2021-10-17"),
-            (1117, 'TEST TOÁN HÌNH HỌC NÂNG CAO', 7, '15', 1, "2021-10-17"),
-            (1118, 'TEST VẬT LÝ NÂNG CAO', 8, '15', 1, "2021-10-17"),
-            (1119, 'TEST HÓA HỌC NÂNG CAO', 9, '15', 1, "2021-10-17"),
-            (1120, 'TEST TIN HỌC NÂNG CAO ', 10, '15', 1, "2021-10-17"),
-            (1121, 'TEST TOÁN SỐ HỌC NÂNG CAO 2', 11, '15', 1, "2021-10-17"),
-            (1122, 'TEST TOÁN HÌNH HỌC NÂNG CAO 2', 12, '15', 1, "2021-10-17"),
-            (1123, 'TEST VẬT LÝ NÂNG CAO 2', 13, '15', 1, "2021-10-17"),
-            (1124, 'TEST HÓA HỌC NÂNG CAO 2', 14, '15', 1, "2021-10-17"),
-            (1125, 'TEST TIN HỌC NÂNG CAO 2', 15, '15', 1, "2021-10-17");
+VALUES  	(1111, 'TEST TRÌNH ĐỘ TOÁN SỐ HỌC', 1, '00:15:00', 1, "2021-10-17"),
+			(1112, 'TEST TRÌNH ĐỘ TOÁN HÌNH HỌC', 2, '00:15:00', 1, "2021-10-17"),
+            (1113, 'TEST TRÌNH ĐỘ VẬT LÝ', 3, '00:15:00', 1, "2021-10-17"),
+            (1114, 'TEST TRÌNH ĐỘ HÓA HỌC', 4, '00:15:00', 1, "2021-10-17"),
+            (1115, 'TEST TRÌNH ĐỘ TIN HỌC', 5, '00:15:00', 1, "2021-10-17"),
+			(1116, 'TEST TOÁN SỐ HỌC NÂNG CAO', 6, '00:15:00', 1, "2021-10-17"),
+            (1117, 'TEST TOÁN HÌNH HỌC NÂNG CAO', 7, '00:15:00', 1, "2021-10-17"),
+            (1118, 'TEST VẬT LÝ NÂNG CAO', 8, '00:15:00', 1, "2021-10-17"),
+            (1119, 'TEST HÓA HỌC NÂNG CAO', 9, '00:15:00', 1, "2021-10-17"),
+            (1120, 'TEST TIN HỌC NÂNG CAO ', 10, '00:15:00', 1, "2021-10-17"),
+            (1121, 'TEST TOÁN SỐ HỌC NÂNG CAO 2', 11, '00:15:00', 1, "2021-10-17"),
+            (1122, 'TEST TOÁN HÌNH HỌC NÂNG CAO 2', 12, '00:15:00', 1, "2021-10-17"),
+            (1123, 'TEST VẬT LÝ NÂNG CAO 2', 13, '00:15:00', 1, "2021-10-17"),
+            (1124, 'TEST HÓA HỌC NÂNG CAO 2', 14, '00:15:00', 1, "2021-10-17"),
+            (1125, 'TEST TIN HỌC NÂNG CAO 2', 15, '00:15:00', 1, "2021-10-17");
             
 -- ExamQuestion
 CREATE TABLE exam_question(

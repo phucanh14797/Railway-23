@@ -44,7 +44,7 @@ WHERE fullname LIKE 'D%o';
 
 
 -- Question 12: Xóa tất cả các exam được tạo trước ngày 20/12/2019
-SELECT * FROM `account`;
+SELECT * FROM exam;
 
 DELETE 
 FROM `account` 
