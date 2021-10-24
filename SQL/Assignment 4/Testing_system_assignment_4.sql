@@ -171,22 +171,23 @@ WHERE group_id = 2;
 
 -- a) Lấy các group có lớn hơn 5 thành viên
 
-SELECT ga.group_id
-FROM group_account ga JOIN `account` ac ON ga.account_id = ac.account_id
-GROUP BY ga.group_id HAVING COUNT(ac.account_id) > 5;
+SELECT gr.group_id
+FROM group_account ga JOIN `group` gr ON ga.group_id = gr.group_id
+GROUP BY ga.group_id HAVING COUNT(ga.account_id) > 5;
  
 
 -- b) Lấy các group có nhỏ hơn 7 thành viên
 
-SELECT ga.group_id
-FROM group_account ga JOIN `account` ac ON ga.account_id = ac.account_id
-GROUP BY ga.group_id HAVING COUNT(ac.account_id) <7 ;
+SELECT gr.group_id
+FROM group_account ga LEFT JOIN `group` gr ON ga.group_id = gr.group_id
+GROUP BY ga.group_id HAVING COUNT(ga.account_id) < 7;
+ 
 
 -- c) Ghép 2 kết quả từ câu a) và câu b)
-SELECT ga.group_id
-FROM group_account ga JOIN `account` ac ON ga.account_id = ac.account_id
-GROUP BY ga.group_id HAVING COUNT(ac.account_id) > 5
+SELECT gr.group_id
+FROM group_account ga JOIN `group` gr ON ga.group_id = gr.group_id
+GROUP BY ga.group_id HAVING COUNT(ga.account_id) > 5
 		UNION ALL
-SELECT ga.group_id
-FROM group_account ga JOIN `account` ac ON ga.account_id = ac.account_id
-GROUP BY ga.group_id HAVING COUNT(ac.account_id) < 7 ;
+SELECT gr.group_id
+FROM group_account ga LEFT JOIN `group` gr ON ga.group_id = gr.group_id
+GROUP BY ga.group_id HAVING COUNT(ga.account_id) < 7;
