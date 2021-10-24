@@ -66,7 +66,7 @@ CREATE TABLE `account`(
 -- Add data Account
 INSERT INTO `account`(email, username, fullname, department_id, position_id, create_date)
 VALUES      ('a@gmail.com', 'a1', 'NGUYỄN VĂN A', 5, 1, "2021-10-17"),
-			('b@gmail.com', 'b1', 'NGUYỄN VĂN B', 5, 2, "2021-10-17"),
+			('b@gmail.com', 'b1', 'NGUYỄN VĂN B', 1, 1, "2021-10-17"),
 			('c@gmail.com', 'c1', 'NGUYỄN VĂN C', 5, 3, "2021-10-17"),
             ('d@gmail.com', 'd1', 'NGUYỄN VĂN D', 5, 4, "2021-10-17"),
             ('e@gmail.com', 'e1', 'NGUYỄN VĂN E', 8, 5, "2021-10-17"),
@@ -176,12 +176,12 @@ CREATE TABLE question(
     create_date		DATE,
     FOREIGN KEY(creator_id) REFERENCES `account`(account_id),
     FOREIGN KEY(type_id) REFERENCES type_question(type_id),
-    FOREIGN KEY(category_id) REFERENCES category_question(category_id)
+    FOREIGN KEY(category_id) REFERENCES category_question(category_id) 
 );
 -- Add data Category_Question
 INSERT INTO question(content, category_id, type_id, creator_id, create_date)
-VALUES	('1 + 1 = ?',																	1,1,1,"2021-10-17"),
-		('Hình tam giác có mấy cạnh ?',													2,1,1,"2021-10-17"),
+VALUES	('Câu hỏi: 1 + 1 = ?',															1,1,1,"2021-10-17"),
+		('Hình tam giác có mấy cạnh ?',													1,1,1,"2021-10-17"),
 		('Nước sôi ở bao nhiêu độ ?',													3,1,1,"2021-10-17"),
 		('Ký hiệu hóa học của sắt là gì ?',												4,1,1,"2021-10-17"),
 		('Bộ phận nào được ví như bộ não của máy tính ?',								5,1,1,"2021-10-17"),
@@ -190,10 +190,10 @@ VALUES	('1 + 1 = ?',																	1,1,1,"2021-10-17"),
 		('Khi ánh sáng đi vào môi trường khác và bị lệch hướng gọi là hiện tượng gì ?',	8,1,1,"2021-10-17"),
 		('Thành phần cấu tạo của hầu hết của các loại nguyên tử gồm những gì ?',		9,1,1,"2021-10-17"),
 		('Bộ nhớ RAM và ROM là bộ nhớ gì ?',											10,1,1,"2021-10-17"),
-		('111 x 111 = ?',																11,1,1,"2021-10-17"),
-		('Đâu là định lý Pitago trong tam giác vuông ?',								12,1,1,"2021-10-17"),
-		('Ảnh của một vật khi soi qua gương được gọi là gì ?',							13,1,1,"2021-10-17"),
-		('Công thức hóa học của Axit Sulfuric ?',										14,1,1,"2021-10-17"),
+		('Câu hỏi 111 x 111 = ?',																11,1,1,"2021-10-17"),
+		('Đâu là định lý Pitago trong tam giác vuông ?',								12,1,1,"2018-10-17"),
+		('Ảnh của một vật khi soi qua gương được gọi là gì ?',							13,1,1,"2018-10-17"),
+		('Công thức hóa học của Axit Sulfuric ?',										14,1,1,"2018-10-17"),
 		('1Mb = ? Kb',																	15,1,1,"2021-10-17");
 
 -- Answer
@@ -202,11 +202,14 @@ CREATE TABLE answer(
 	content			VARCHAR(1000) CHAR SET UTF8MB4 NOT NULL,
     question_id		INT UNSIGNED NOT NULL,
     is_correct		BOOLEAN, -- 1 là đúng 0 là sai
-    FOREIGN KEY(question_id) REFERENCES question(question_id)
+    FOREIGN KEY(question_id) REFERENCES question(question_id) ON DELETE CASCADE
 );
 -- Add Answer                           
 INSERT INTO answer(content, question_id, is_correct)
-VALUES	('2',																1,1),
+VALUES	('1',																1,0),
+		('2',																1,1),
+		('3',																1,0),
+        ('4',																1,0),
 		('3',																2,1),
 		('100 độ C',														3,1),
 		('Fe',																4,1),
@@ -248,26 +251,26 @@ VALUES  	(1111, 'TEST TRÌNH ĐỘ TOÁN SỐ HỌC', 1, '00:15:00', 1, "2021-10
             (1120, 'TEST TIN HỌC NÂNG CAO ', 10, '00:15:00', 1, "2021-10-17"),
             (1121, 'TEST TOÁN SỐ HỌC NÂNG CAO 2', 11, '00:15:00', 1, "2021-10-17"),
             (1122, 'TEST TOÁN HÌNH HỌC NÂNG CAO 2', 12, '00:15:00', 1, "2021-10-17"),
-            (1123, 'TEST VẬT LÝ NÂNG CAO 2', 13, '00:15:00', 1, "2021-10-17"),
-            (1124, 'TEST HÓA HỌC NÂNG CAO 2', 14, '00:15:00', 1, "2021-10-17"),
-            (1125, 'TEST TIN HỌC NÂNG CAO 2', 15, '00:15:00', 1, "2021-10-17");
+            (1123, 'TEST VẬT LÝ NÂNG CAO 2', 13, '00:15:00', 1, "2018-10-17"),
+            (1124, 'TEST HÓA HỌC NÂNG CAO 2', 14, '00:15:00', 1, "2018-10-17"),
+            (1125, 'TEST TIN HỌC NÂNG CAO 2', 15, '00:15:00', 1, "2018-10-17");
             
 -- ExamQuestion
 CREATE TABLE exam_question(
 	exam_id			SMALLINT UNSIGNED,
 	question_id		INT UNSIGNED,
     PRIMARY KEY(exam_id, question_id),
-    FOREIGN KEY(exam_id) REFERENCES exam(exam_id),
-    FOREIGN KEY(question_id) REFERENCES question(question_id)
+    FOREIGN KEY(exam_id) REFERENCES exam(exam_id) ON DELETE CASCADE,
+    FOREIGN KEY(question_id) REFERENCES question(question_id) ON DELETE CASCADE
 );
 -- Add Exam Question
 INSERT INTO exam_question(exam_id, question_id)
 VALUES		(1,1),
-			(2,2),
-            (3,3),
-            (4,4),
-            (5,5),
-            (6,6),
+			(2,1),
+            (3,1),
+            (4,2),
+            (5,2),
+            (6,2),
             (7,7),
             (8,8),
             (9,9),
