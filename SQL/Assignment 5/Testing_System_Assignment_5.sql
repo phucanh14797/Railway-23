@@ -13,9 +13,9 @@ from group_account;
 
 DROP VIEW IF EXISTS v_account_tham_gia_nhieu_group;
 CREATE VIEW v_account_tham_gia_nhieu_group AS(
-			SELECT ac.fullname
+			SELECT ac.fullname, COUNT(ga.group_id)
             FROM `account` ac JOIN group_account ga ON ac.account_id = ga.account_id
-            GROUP BY ac.fullname HAVING COUNT(ga.group_id) = (
+            GROUP BY ac.account_id HAVING COUNT(ga.group_id) = (
 											SELECT MAX(tim_max)
 											FROM ( 
 													SELECT COUNT(ga.group_id) AS tim_max
@@ -56,5 +56,3 @@ CREATE VIEW v_cau_hoi_user_ho_Nguyen AS (
             WHERE ac.fullname LIKE 'NGUYEN%'
             
 );
-
-
