@@ -60,8 +60,8 @@ CREATE TABLE `account`(
     department_id	TINYINT UNSIGNED NOT NULL,
     position_id		TINYINT UNSIGNED NOT NULL,
     create_date		DATE,
-    FOREIGN KEY(department_id) REFERENCES department(department_id),
-    FOREIGN KEY(position_id) REFERENCES `position`(position_id)
+    FOREIGN KEY(department_id) REFERENCES department(department_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(position_id) REFERENCES `position`(position_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Add data Account
 INSERT INTO `account`(email, username, fullname, department_id, position_id, create_date)
@@ -112,8 +112,8 @@ CREATE TABLE group_account(
 	account_id	INT UNSIGNED NOT NULL,	
 	join_date 	DATE,
     PRIMARY KEY(group_id, account_id),
-    FOREIGN KEY(group_id) REFERENCES `group`(group_id),
-    FOREIGN KEY(account_id) REFERENCES `account`(account_id)
+    FOREIGN KEY(group_id) REFERENCES `group`(group_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(account_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Add data Group_account
 INSERT INTO `group_account`(group_id, account_id, join_date)
@@ -174,9 +174,9 @@ CREATE TABLE question(
     type_id			TINYINT UNSIGNED,
 	creator_id		INT UNSIGNED,
     create_date		DATE,
-    FOREIGN KEY(creator_id) REFERENCES `account`(account_id),
-    FOREIGN KEY(type_id) REFERENCES type_question(type_id),
-    FOREIGN KEY(category_id) REFERENCES category_question(category_id) 
+    FOREIGN KEY(creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(type_id) REFERENCES type_question(type_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(category_id) REFERENCES category_question(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Add data Category_Question
 INSERT INTO question(content, category_id, type_id, creator_id, create_date)
@@ -234,8 +234,8 @@ CREATE TABLE exam(
     duration		TIME,
     creator_id		INT UNSIGNED,
     create_date		DATE,
-    FOREIGN KEY(creator_id) REFERENCES `account`(account_id),
-    FOREIGN KEY(category_id) REFERENCES category_question(category_id)
+    FOREIGN KEY(creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(category_id) REFERENCES category_question(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Add Exam
 INSERT INTO exam(`code`, title, category_id, duration, creator_id, create_date)
@@ -260,8 +260,8 @@ CREATE TABLE exam_question(
 	exam_id			SMALLINT UNSIGNED,
 	question_id		INT UNSIGNED,
     PRIMARY KEY(exam_id, question_id),
-    FOREIGN KEY(exam_id) REFERENCES exam(exam_id) ON DELETE CASCADE,
-    FOREIGN KEY(question_id) REFERENCES question(question_id) ON DELETE CASCADE
+    FOREIGN KEY(exam_id) REFERENCES exam(exam_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(question_id) REFERENCES question(question_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Add Exam Question
 INSERT INTO exam_question(exam_id, question_id)
